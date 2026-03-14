@@ -51,6 +51,9 @@ $(EXAMPLES_BINARIES): $(BUILD_DIR)/%: $(SOURCE_FILES) $(EXAMPLES_SOURCE_FILES) |
 	$(GET_DEPENDENCIES_WITH)
 	$(PONYC) -o $(BUILD_DIR) $(EXAMPLES_DIR)/$*
 
+lint:
+	pony-lint .
+
 clean:
 	$(CLEAN_DEPENDENCIES_WITH)
 	rm -rf $(BUILD_DIR)
@@ -70,4 +73,4 @@ all: test
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-.PHONY: all examples clean TAGS test test-one
+.PHONY: all examples clean lint TAGS test test-one
