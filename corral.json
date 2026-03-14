@@ -1,0 +1,12 @@
+{
+  "packages": ["pyrois"],
+  "info": {
+    "name": "pyrois",
+    "version": "0.0.0",
+    "description": "A web application framework for Pony",
+    "homepage": "https://github.com/ponylang/pyrois",
+    "license": "BSD-2-Clause",
+    "documentation_url": "https://ponylang.github.io/pyrois/"
+  },
+  "deps": []
+}
