@@ -8,5 +8,10 @@
     "license": "BSD-2-Clause",
     "documentation_url": "https://ponylang.github.io/pyrois/"
   },
-  "deps": []
+  "deps": [
+    {
+      "locator": "github.com/ponylang/ssl.git",
+      "version": "2.0.0"
+    }
+  ]
 }
