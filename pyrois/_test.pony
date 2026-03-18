@@ -8,4 +8,4 @@ actor \nodoc\ Main is TestList
     None
 
   fun tag tests(test: PonyTest) =>
-    None
+    _SignedCookieTests.tests(test)

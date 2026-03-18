@@ -5,6 +5,7 @@ GET_DEPENDENCIES_WITH := corral fetch
 CLEAN_DEPENDENCIES_WITH := corral clean
 COMPILE_WITH := corral run -- ponyc
 BUILD_DOCS_WITH := corral run -- pony-doc
+LINT_WITH := corral run -- pony-lint
 
 BUILD_DIR ?= build/$(config)
 SRC_DIR := $(PACKAGE)
@@ -24,9 +25,19 @@ else
 	PONYC = $(COMPILE_WITH) --debug
 endif
 
-ifdef ssl
-	PONYC += -D$(ssl)
+ifeq (,$(filter $(MAKECMDGOALS),clean docs lint TAGS))
+  ifeq ($(ssl), 3.0.x)
+          SSL = -Dopenssl_3.0.x
+  else ifeq ($(ssl), 1.1.x)
+          SSL = -Dopenssl_1.1.x
+  else ifeq ($(ssl), libressl)
+          SSL = -Dlibressl
+  else
+    $(error Unknown SSL version "$(ssl)". Must set using 'ssl=FOO')
+  endif
 endif
+
+PONYC := $(PONYC) $(SSL)
 
 SOURCE_FILES := $(shell find $(SRC_DIR) -name *.pony)
 EXAMPLES := $(notdir $(shell find $(EXAMPLES_DIR)/* -maxdepth 0 -type d))
@@ -52,7 +63,8 @@ $(EXAMPLES_BINARIES): $(BUILD_DIR)/%: $(SOURCE_FILES) $(EXAMPLES_SOURCE_FILES) |
 	$(PONYC) -o $(BUILD_DIR) $(EXAMPLES_DIR)/$*
 
 lint:
-	pony-lint .
+	$(GET_DEPENDENCIES_WITH)
+	$(LINT_WITH) .
 
 clean:
 	$(CLEAN_DEPENDENCIES_WITH)
