@@ -36,7 +36,7 @@ EXAMPLES_BINARIES := $(addprefix $(BUILD_DIR)/,$(EXAMPLES))
 test: unit-tests
 
 unit-tests: $(tests_binary)
-	$^ --sequential
+	$^ --sequential --shuffle
 
 test-one: $(tests_binary)
 	$^ --only="$(t)"
