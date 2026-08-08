@@ -5,6 +5,7 @@ GET_DEPENDENCIES_WITH := corral fetch
 CLEAN_DEPENDENCIES_WITH := corral clean
 COMPILE_WITH := corral run -- ponyc
 BUILD_DOCS_WITH := corral run -- pony-doc
+LINT_WITH := corral run -- pony-lint
 
 BUILD_DIR ?= build/$(config)
 SRC_DIR := $(PACKAGE)
@@ -52,7 +53,8 @@ $(EXAMPLES_BINARIES): $(BUILD_DIR)/%: $(SOURCE_FILES) $(EXAMPLES_SOURCE_FILES) |
 	$(PONYC) -o $(BUILD_DIR) $(EXAMPLES_DIR)/$*
 
 lint:
-	pony-lint .
+	$(GET_DEPENDENCIES_WITH)
+	$(LINT_WITH) .
 
 clean:
 	$(CLEAN_DEPENDENCIES_WITH)
